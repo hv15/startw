@@ -1,3 +1,7 @@
+startw(1)                       startw man page                      startw(1)
+
+
+
 NAME
        startw - initialise a Wayland session
 
@@ -22,7 +26,7 @@ DESCRIPTION
        initialise a X Window System session.
 
 OPTIONS
-       The arguments that are currently support by startx are:
+       The arguments that are currently support by startw are:
 
        -h print out the usage message and exit.
 
@@ -50,4 +54,4 @@ AUTHOR
 
 
 
-1.1.0                             19 Oct 2016                        startw(1)
+1.1.1                             19 Oct 2016                        startw(1)

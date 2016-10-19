@@ -4,7 +4,7 @@
 # environment for a Wayland session based upon what is specificed in the
 # `~/.winitrc' file.
 
-VERSION=1.1.0
+VERSION=1.1.1
 CONFIG= # default is in .winitrc file
 
 # Keyboard Config String particulars
