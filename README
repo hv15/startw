@@ -1,0 +1,53 @@
+NAME
+       startw - initialise a Wayland session
+
+SYNOPSIS
+       startw [-h] [-v] [-c CONFIG] [-k KEYBOARDCONF]
+
+DESCRIPTION
+       The  startw script is a front end to a Wayland shell (e.g. desktop man-
+       ager) that provides a somewhat nicer user interface for running a  sin-
+       gle Wayland session. It is typically run without any arguments.
+
+       Much of the configuration for the Wayland shell is done through a shell
+       specific configuration file. However, some settings can only  be  given
+       through  command-line  arguments  and/or  environmental variables.  For
+       instance, to configure the keyboard layout in most Wayland shells,  the
+       following  environment  variables  need  to  be set: XKB_DEFAULT_RULES,
+       XKB_DEFAULT_MODEL,       XKB_DEFAULT_LAYOUT,       XKB_DEFAULT_VARIANT,
+       XKB_DEFAULT_OPTION.  The  startw  script  handles  this  through the -k
+       option (see below on how to use it).
+
+       The script is analogues to the startx(1) and xinit(1) commands used  to
+       initialise a X Window System session.
+
+OPTIONS
+       The arguments that are currently support by startx are:
+
+       -h print out the usage message and exit.
+
+       -v print out the version number and exit.
+
+       -c specify a configuration file other than the default.
+
+       -k specify  the  keyboard  settings  as  a  string  formatted  as "lay-
+          out;model;variant;options", e.g. "us;;;ctrl:nocaps" for  a  US  key-
+          board  with  no caps-lock. See xkeyboard-config(7) for more informa-
+          tion.
+
+FILES
+       $(HOME)/.winitrc    Client to run. Typically a shell script which  runs
+                           many programs in the background. (Default)
+
+SEE ALSO
+       startx(1), xinit(1)
+
+BUGS
+       No known bugs.
+
+AUTHOR
+       Hans-Nikolai Viessmann (hv15@hw.ac.uk)
+
+
+
+1.1.0                             19 Oct 2016                        startw(1)

@@ -1,0 +1,78 @@
+#!/bin/env bash
+
+# This file roughly emulates the `startx' command in that it setups up the
+# environment for a Wayland session based upon what is specificed in the
+# `~/.winitrc' file.
+
+VERSION=1.1.0
+CONFIG= # default is in .winitrc file
+
+# Keyboard Config String particulars
+# - it is assummed that the string will be of the format:
+#   "layout;model;variant;options", e.g.
+#   "us;;;ctrl:nocaps" for a US keyboard with no caps-lock
+DIVIDER=";" # this what we use to tokenise the string
+
+# Some helper functions
+error_log()
+{
+    echo "${@}" >&2
+}
+
+# FIXME We should not be flooding the environment like this, we should
+#       be passing the tokens to the config file and let the user
+#       decide how to interpret these.
+parse_keyboard_string()
+{
+    local keyboards="${1}"
+    local tokens=( $(echo "${keyboards}" | tr "${DIVIDER}" "\n") )
+    export XKB_DEFAULT_LAYOUT="${tokens[0]}"
+    export XKB_DEFAULT_MODEL="${tokens[1]}"
+    export XKB_DEFAULT_VARIANT="${tokens[2]}"
+    export XKB_DEFAULT_OPTIONS="${tokens[3]}"
+    unset keyboards
+    unset tokens
+}
+
+# Parse arguments
+while getopts ":hvc:k:" opt; do
+    case ${opt} in
+        h)
+            echo "Usage: ${0} [-h] [-v] [-c CONFIG] [-k KEYBOARDCONF]"
+            exit 0
+            ;;
+        v)
+            echo "${0} v. ${VERSION}"
+            exit 0
+            ;;
+        c)
+            CONFIG="${OPTARG}"
+            ;;
+        k)
+            parse_keyboard_string "${OPTARG}"
+            ;;
+        \?)
+            error_log "Invalid option: ${OPTARG}!"
+            exit -1
+            ;;
+        :)
+            error_log "Option -${OPTARG} requires an argument!"
+            exit -1
+            ;;
+    esac
+done
+
+# Sanity checks
+# - make sure we aren't in X/Wayland session
+VT="$(tty)"
+if [[ ${VT:5:1} != "t" ]]; then
+    error_log "Unable start as we are in a X/Wayland session or PTS!"
+    exit -1
+fi
+
+# execute the .winitrc file
+if [[ ! -z "$CONFIG" ]]; then
+    source "$CONFIG"
+else
+    source "${HOME}/.winitrc"
+fi

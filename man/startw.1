@@ -1,0 +1,33 @@
+.\" Manpage for startw.
+.\" Contact hv15 AT hw.ac.uk to correct errors or typos.
+.TH startw 1 "19 Oct 2016" "1.1.0" "startw man page"
+.SH NAME
+startw \- initialise a Wayland session
+.SH SYNOPSIS
+startw [-h] [-v] [-c CONFIG] [-k KEYBOARDCONF] 
+.SH DESCRIPTION
+The startw script is a front end to a Wayland shell (e.g. desktop manager) that provides a somewhat nicer user interface for running a single Wayland session. It is typically run without any arguments.
+
+Much of the configuration for the Wayland shell is done through a shell specific configuration file. However, some settings can only be given through command-line arguments and/or environmental variables.
+For instance, to configure the keyboard layout in most Wayland shells, the following environment variables need to be set: XKB_DEFAULT_RULES, XKB_DEFAULT_MODEL, XKB_DEFAULT_LAYOUT, XKB_DEFAULT_VARIANT, XKB_DEFAULT_OPTION. The startw script handles this through the \fB-k\fP option (see below on how to use it).
+
+The script is analogues to the startx(1) and xinit(1) commands used to initialise a X Window System session.
+.SH OPTIONS
+The arguments that are currently support by startx are:
+.IP \fB\-h\fP 3
+print out the usage message and exit.
+.IP \fB\-v\fP
+print out the version number and exit.
+.IP \fB\-c\fP
+specify a configuration file other than the default.
+.IP \fB\-k\fP
+specify the keyboard settings as a string formatted as "layout;model;variant;options", e.g. "us;;;ctrl:nocaps" for a US keyboard with no caps-lock. See xkeyboard-config(7) for more information.
+.SH FILES
+.IP \fB$(HOME)/.winitrc\fP 20
+Client to run. Typically a shell script which runs many programs in the background. (\fIDefault\fP) 
+.SH SEE ALSO
+startx(1), xinit(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Hans-Nikolai Viessmann (hv15@hw.ac.uk)
